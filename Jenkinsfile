@@ -4,7 +4,7 @@ pipeline {
         stage('Build') {
             agent {
                 dockerContainer { 
-                    image 'jenkins/inbound-agent-with-maven'
+                    image 'gdgdgdrox94/gd-image:jenkins-inbound-agent-with-maven'
                     }
             }
             steps {
