@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             agent {
-                docker { 
+                dockerContainer { 
                     image 'jenkins/inbound-agent-with-maven' 
                     ports '1234:1234'
                     }
