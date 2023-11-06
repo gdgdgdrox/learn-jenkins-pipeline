@@ -5,7 +5,6 @@ pipeline {
             agent {
                 dockerContainer { 
                     image 'jenkins/inbound-agent-with-maven'
-                     args  '-p 1234:1234'
                     }
             }
             steps {
@@ -18,7 +17,8 @@ pipeline {
                 sh 'mvn package'
 
                 // package
-                sh 'java -jar ./target/simpleApp.jar'
+                withRun('-p 1234:1234') {
+                        sh 'java -jar ./target/simpleApp.jar'
             }
         }
     }
