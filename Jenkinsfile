@@ -17,10 +17,15 @@ pipeline {
                 sh 'mvn package'
 
                 // package
-                withRun('-p 1234:1234') {
-                        sh 'java -jar ./target/simpleApp.jar'
+                script {
+                    def container = docker.image('gdgdgdrox94/gd-image:jenkins-inbound-agent-with-maven').run('-p 1234:1234', '-d')
+                    try {
+                        sh "docker exec ${container.id} java -jar ./target/simpleApp.jar"
+                    } finally {
+                        container.stop()
+                    }
+                }
             }
         }
     }
-}
 }
