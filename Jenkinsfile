@@ -2,11 +2,14 @@ pipeline {
     stages {
         stage('Build') {
             agent {
-                docker { image 'jenkins/inbound-agent-with-maven' }
+                docker { 
+                    image 'jenkins/inbound-agent-with-maven' 
+                    ports '1234:1234'
+                    }
             }
             steps {
                 // checkout source code from Github
-                sh 'git pull ...'
+                checkout scm
 
                 sh 'ls -lrt'
 
@@ -17,13 +20,5 @@ pipeline {
                 sh 'java -jar ./target/simpleApp.jar'
             }
         }
-        // stage('Deploy') {
-        //     agent {
-        //         docker { image 'node:20.9.0-alpine3.18' }
-        //     }
-        //     steps {
-        //         sh 'node --version'
-        //     }
-        // }
     }
 }
